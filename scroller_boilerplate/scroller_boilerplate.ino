@@ -17,6 +17,7 @@ void setup() {
 
 void loop() {
   i++;
+  i %= N;
   for (int led = 0; led < N; led++) {
     strip.setPixelColor(led, matrix[(led + i) % N]);
   }

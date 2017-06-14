@@ -25,6 +25,7 @@ void loop() {
   delay(0);
   
   i++;
+  i %= N;
 }
 
 /*
