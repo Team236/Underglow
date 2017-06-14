@@ -11,7 +11,7 @@ uint32_t matrix[N];
 void setup() {
   generate(matrix);
   i = 0;
-  strip.setBrightness(32);
+  //strip.setBrightness(32);
   
   strip.begin();
   strip.show();
