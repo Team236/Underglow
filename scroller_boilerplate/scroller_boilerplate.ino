@@ -4,7 +4,6 @@
 #define N 300
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(N, PIN, NEO_GRB + NEO_KHZ800);
 
-int offset = 0;
 int i;
 uint32_t matrix[N];
 
@@ -18,11 +17,8 @@ void setup() {
 
 void loop() {
   i++;
-  offset = i % N;
   for (int led = 0; led < N; led++) {
-    int index = (led + offset) % N;
-    uint32_t color = matrix[index];
-    strip.setPixelColor(led, color);
+    strip.setPixelColor(led, matrix[(led + i) % N]);
   }
   strip.show();
 }

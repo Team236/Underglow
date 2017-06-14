@@ -19,8 +19,7 @@ void setup() {
 
 void loop() {
   for (int led = 0; led < N; led++) {
-    int index = (led + i) % N;
-    strip.setPixelColor(led, matrix[index]);
+    strip.setPixelColor(led, matrix[(led + i) % N]);
   }
   strip.show();
   delay(0);
