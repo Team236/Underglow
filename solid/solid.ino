@@ -2,7 +2,7 @@
 
 #define PIN 6
 #define N 300
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(60, PIN, NEO_RGBW + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(N, PIN, NEO_GRB + NEO_KHZ800);
 
 uint32_t color = strip.Color(30, 20, 200);
 
