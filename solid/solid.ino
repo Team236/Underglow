@@ -1,19 +1,20 @@
-#include <Adafruit_NeoPixel.h>
+#include <FastLED.h>
 
 #define PIN 6
 #define N 300
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(N, PIN, NEO_GRB + NEO_KHZ800);
+CRGB strip[N];
 
-uint32_t color = strip.Color(30, 20, 200);
 
 void setup() {
-  strip.begin();
+  FastLED.addLeds<NEOPIXEL, PIN>(strip, N);
+  CRGB color = CRGB::Navy;
 
   for(int i = 0; i < N; i++) {
-    strip.setPixelColor(i, color);
+    strip[i] = color;
   }
-  strip.show();
+  FastLED.show();
 }
 
 void loop() {
+  delay(0);
 }
