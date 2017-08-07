@@ -1,40 +1,42 @@
-#include <Adafruit_NeoPixel.h>
+#include <FastLED.h>
 
 #define PIN 6
-#define N 266
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(N, PIN, NEO_GRB + NEO_KHZ800);
+#define N 300
+#define DELAY 0
+
+#define SIZE 15
+
+CRGB strip[N];
 
 int i;
-uint32_t matrix[N];
-
-#define SIZE 10
 
 void setup() {
-  generate(matrix);
-  i = 0;
+  FastLED.addLeds<NEOPIXEL, PIN>(strip, N);
+  generate();
   
-  strip.begin();
-  strip.show();
+  i = 0;
 }
 
 void loop() {
-  i++;
+  i %= N;
   for (int led = 0; led < N; led++) {
-    strip.setPixelColor(led, matrix[(led + i) % N]);
+    strip[led] = strip[(led + 1) % N];
   }
-  strip.show();
-  delay(15);
+  
+  FastLED.show();
+  i++;
+  delay(DELAY);
 }
 
 /*
  * Fill the matrix with strip.Color values
  */
-void generate(uint32_t *mat) {
+void generate() {
   for (int j = 0; j < N; j++) {
     if (j % (SIZE*2) < SIZE) {
-      mat[j] = strip.Color(0, 0, 200);
+      strip[j] = CRGB(0, 0, 255);
     } else {
-      mat[j] = strip.Color(0, 0, 0);
+      strip[j] = CRGB(150, 150, 150);
     }
   }
 }

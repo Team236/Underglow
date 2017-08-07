@@ -1,22 +1,22 @@
-#include <Adafruit_NeoPixel.h>
+#include "FastLED.h"
 
 #define PIN 6
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(300, PIN, NEO_GRB + NEO_KHZ800);
+#define N 300
+#define NUM_COLORS 3
 
-// CONSTANTS
-int HZ = 255;
-int DELAY = 1000 / HZ; // delay in ms: 100hz
-int PERIOD = 255;
-
-int i, increment, color;
+CRGB strip[N];
+CHSV colors[NUM_COLORS];
+int i, color, increment;
 
 void setup() {
-  strip.begin();
-  strip.show();
-
+  FastLED.addLeds<NEOPIXEL, PIN>(strip, N);
   i = 0;
-  increment = 1;
   color = 0;
+
+  colors[0] = CHSV(0,255,255);
+  colors[1] = CHSV(96,255,255);
+  colors[2] = CHSV(160,255,255);
+
 }
 
 void loop() {
@@ -24,41 +24,16 @@ void loop() {
     increment = 1;
     color += 1;
   }
-  else if (i >= PERIOD) {
+  else if (i >= 255) {
     increment = -1;
   }
+  color %= NUM_COLORS;
 
-  if (color % 3 == 0) {
-    setInRange(0, 150, i, 0, 0);
-  } else if (color % 3 == 1) {
-    setInRange(0, 150, 0, i, 0);
-  } else if (color % 3 == 2) {
-    setInRange(0, 150, 0, 0, i);
-  } else {
-    setInRange(0, 150, i, i, i);
+  for(int j = 0; j < N; j++) {
+    strip[j] = CHSV(colors[color].h, colors[color].s, i);
   }
   
   i += increment;
-  strip.show();
-  delay(DELAY);
+  FastLED.show();
+  delay(0);
 }
-
-// Set the pixels from min to max on strip to color
-void setInRange(int min, int max, int color[]) {
-  for (int i = min; i < max; i++) {
-    strip.setPixelColor(i, color[0], color[1], color[2]);
-  }
-}
-
-// Set the pixels from min to max on strip to color
-void setInRange(int min, int max, int r, int g, int b) {
-  int color[3] = {r, g, b};
-  setInRange(min, max, color);
-}
-
-// Re-scale n into a different space
-int scale(int n, int max_in, int max_out) {
-  double proportion = n / max_in;
-  return (int) proportion * max_out;
-}
-
