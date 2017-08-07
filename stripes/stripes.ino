@@ -2,9 +2,9 @@
 
 #define PIN 6
 #define N 300
-#define DELAY 0
+#define DELAY 10
 
-#define SIZE 15
+#define SIZE 5
 
 CRGB strip[N];
 
@@ -32,11 +32,15 @@ void loop() {
  * Fill the matrix with strip.Color values
  */
 void generate() {
-  for (int j = 0; j < N; j++) {
-    if (j % (SIZE*2) < SIZE) {
-      strip[j] = CRGB(0, 0, 255);
-    } else {
-      strip[j] = CRGB(150, 150, 150);
+  for (int j = 0; j < N; j+=0) {
+    Serial.println(j);
+    for (int k = 0; k < SIZE; k++) {
+      strip[j] = CRGB(0,0,255);
+      j++;
+    }
+    for (int k = 0; k < SIZE; k++) {
+      strip[j] = CRGB(150,150,150);
+      j++;
     }
   }
 }
